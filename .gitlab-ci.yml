@@ -18,19 +18,31 @@ build:
   only:
     - branches
 
-test:
-  services:
-    - postgres:latest
-  variables:
-    POSTGRES_DB: test
-  stage: test
-  image: gliderlabs/herokuish:latest
+#test:
+#  services:
+#    - postgres:latest
+#  variables:
+#    POSTGRES_DB: test
+#  stage: test
+#  image: gliderlabs/herokuish:latest
+#  script:
+#    - setup_test_db
+#    - cp -R . /tmp/app
+#    - /bin/herokuish buildpack test
+#  only:
+#    - branches
+
+editorconfig:check:
+  image: node:6
+
+  # Cache NPM locally installed packages
+  cache:
+    paths:
+      - node_modules/
+
   script:
-    - setup_test_db
-    - cp -R . /tmp/app
-    - /bin/herokuish buildpack test
-  only:
-    - branches
+    - npm install editorconfig-tools
+    - ./node_modules/.bin/editorconfig-tools check ./*
 
 codequality:
   image: docker:latest
