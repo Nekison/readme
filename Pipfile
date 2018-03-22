@@ -5,12 +5,13 @@ verify_ssl = true
 name = "pypi"
 
 
-[dev-packages]
-
-
-
 [packages]
 
+
+
+[dev-packages]
+
+"flake8" = "*"
 
 
 [requires]

@@ -1,6 +1,9 @@
 
 image: alpine:latest
 
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/pip-cache"
+
 stages:
   - build
   - test
@@ -43,6 +46,19 @@ editorconfig:check:
   script:
     - npm install editorconfig-tools
     - ./node_modules/.bin/editorconfig-tools check ./*
+
+flake8:
+  image: python:3
+
+  cache:
+    paths:
+      - "$CI_PROJECT_DIR/pip-cache"
+
+
+  script:
+    - pip install pipenv
+    - pipenv run flake8 .
+
 
 codequality:
   image: docker:latest
