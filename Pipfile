@@ -12,6 +12,7 @@ name = "pypi"
 [dev-packages]
 
 "flake8" = "*"
+nose = "*"
 
 
 [requires]
