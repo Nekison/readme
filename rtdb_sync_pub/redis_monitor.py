@@ -1,6 +1,8 @@
-# Copyright (c) 2018, Sorbotics LLC.
-# All rights reserved.
+"""Provide Redis monitoring facilities.
 
+Copyright (c) 2018, Sorbotics LLC.
+All rights reserved.
+"""
 
 __all__ = ["RedisMonitor"]
 
