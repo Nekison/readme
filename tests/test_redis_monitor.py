@@ -6,6 +6,8 @@ All rights reserved.
 
 import unittest
 
+import redis
+
 from rtdb_sync_pub import redis_monitor
 
 
@@ -14,11 +16,14 @@ class TestRedisMonitor(unittest.TestCase):
 
     def setUp(self):
         """Redis Monitor test case setup."""
+        self.redis = redis.Redis("redis")
         self.monitor = redis_monitor.RedisMonitor()
 
     def test_monitor_return_iterable(self):
         """Test that monitor() method produce an iterable."""
         monitorResult = self.monitor.monitor()
+
+        self.redis.set("foo", "bar")
 
         try:
             iter(monitorResult)

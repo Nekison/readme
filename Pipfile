@@ -7,6 +7,8 @@ name = "pypi"
 
 [packages]
 
+redis = "*"
+hiredis = "*"
 
 
 [dev-packages]

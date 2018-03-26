@@ -28,6 +28,9 @@ test:
     paths:
       - "$CI_PROJECT_DIR/pip-cache"
 
+  services:
+    - redis
+
   script:
     - pip install pipenv
     - pipenv install -d
