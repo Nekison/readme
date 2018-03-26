@@ -1,5 +1,8 @@
-# Copyright (c) 2018, Sorbotics LLC.
-# All rights reserved.
+"""Real Time Dabase sync publisher.
+
+Copyright (c) 2018, Sorbotics LLC.]
+All rights reserved.
+"""
 
 __all__ = ["version"]
 
