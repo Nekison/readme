@@ -35,6 +35,42 @@ class TestParseResponse(unittest.TestCase):
 
         self.assertTrue(isinstance(command, dict))
 
+    def test_return_dict_has_timestamp(self):
+        """Test that return dictionary has timestamp attr."""
+        command = redis_command_parser.parse_response(self.response)
+
+        self.assertTrue("timestamp" in command)
+
+    def test_return_dict_has_database(self):
+        """Test that return dictionary has database attr."""
+        command = redis_command_parser.parse_response(self.response)
+
+        self.assertTrue("database" in command)
+
+    def test_return_dict_has_client(self):
+        """Test that return dictionary has client attr."""
+        command = redis_command_parser.parse_response(self.response)
+
+        self.assertTrue("client" in command)
+
+    def test_return_dict_has_command(self):
+        """Test that return dictionary has command attr."""
+        command = redis_command_parser.parse_response(self.response)
+
+        self.assertTrue("command" in command)
+
+    def test_return_dict_has_key_name(self):
+        """Test that return dictionary has key_name attr."""
+        command = redis_command_parser.parse_response(self.response)
+
+        self.assertTrue("key_name" in command)
+
+    def test_return_dict_has_arguments(self):
+        """Test that return dictionary has arguments attr."""
+        command = redis_command_parser.parse_response(self.response)
+
+        self.assertTrue("arguments" in command)
+
 
 if __name__ == '__main__':
     unittest.main()
