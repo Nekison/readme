@@ -4,6 +4,7 @@ Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
 
+import itertools
 import unittest
 
 import redis
@@ -37,7 +38,9 @@ class TestRedisMonitor(unittest.TestCase):
 
         self.redis.set("foo", "bar")
 
-        self.assertTrue(all(isinstance(el, bytes) for el in monitor_result))
+        self.assertTrue(all(
+            isinstance(el, bytes) for el in itertools.islice(monitor_result, 1)
+        ))
 
 
 if __name__ == '__main__':
