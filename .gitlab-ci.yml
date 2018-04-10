@@ -27,7 +27,8 @@ test:
     - redis
 
   script:
-    - pipenv run nosetests
+    - pipenv install --system -d
+    - nosetests
 
 editorconfig-check:
   image: node:6
@@ -45,7 +46,8 @@ flake8:
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
 
   script:
-    - pipenv run flake8 .
+    - pipenv install --system -d
+    - flake8 .
 
 #
 #codequality:
