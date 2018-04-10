@@ -11,31 +11,37 @@ class RedisMonitor:
     """Monitor Redis and notify changes."""
 
     def __init__(self, connection_pool):
-        self.connection_pool = connection_pool
-        self.connection = None
+        """Initialize the Redis monitor.
+
+        Takes as argument a Redis connection pool as produced by
+        `redis.ConnectionPool`.
+        """
+        self._connection_pool = connection_pool
+        self._connection = None
 
     def __del__(self):
+        """Release resources on delete."""
         try:
-            self.reset()
-        except:
+            self._reset()
+        except Exception:
             pass
 
-    def reset(self):
-        if self.connection:
-            self.connection_pool.release(self.connection)
-            self.connection = None
+    def _reset(self):
+        if self._connection:
+            self._connection_pool.release(self._connection)
+            self._connection = None
 
-    def read_response(self):
-        return self.connection.read_response()
+    def _read_response(self):
+        return self._connection.read_response()
 
-    def listen(self):
+    def _listen(self):
         while True:
-            yield self.read_response()
+            yield self._read_response()
 
     def monitor(self):
         """Produce an iterable of changes on the Redis database."""
-        if self.connection is None:
-            self.connection = self.connection_pool.get_connection(
+        if self._connection is None:
+            self._connection = self._connection_pool.get_connection(
                 'monitor', None)
-        self.connection.send_command("monitor")
-        return self.listen()
+        self._connection.send_command("monitor")
+        return self._listen()
