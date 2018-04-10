@@ -7,4 +7,4 @@ RUN pip install pipenv
 COPY Pipfile /app/
 COPY Pipfile.lock /app/
 
-RUN pipenv install -d
+RUN pipenv install -d --system
