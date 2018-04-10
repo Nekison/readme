@@ -21,14 +21,22 @@ class TestRedisMonitor(unittest.TestCase):
 
     def test_monitor_return_iterable(self):
         """Test that monitor() method produce an iterable."""
-        monitorResult = self.monitor.monitor()
+        monitor_result = self.monitor.monitor()
 
         self.redis.set("foo", "bar")
 
         try:
-            iter(monitorResult)
+            iter(monitor_result)
         except TypeError:
             self.fail("monitor() return value is not iterable")
+
+    def test_monitor_return_iterable_of_binary_strings(self):
+        """Test that monitor() method produce an iterable."""
+        monitor_result = self.monitor.monitor()
+
+        self.redis.set("foo", "bar")
+
+        self.assertTrue(all(isinstance(el, bytes) for el in monitor_result))
 
 
 if __name__ == '__main__':
