@@ -41,19 +41,12 @@ editorconfig:check:
     - npm install editorconfig-tools
     - ./node_modules/.bin/editorconfig-tools check ./*
 
-#flake8:
-#  image: python:3
-#
-#  cache:
-#    paths:
-#      - "$CI_PROJECT_DIR/pip-cache"
-#
-#
-#  script:
-#    - pip install pipenv
-#    - pipenv install -d
-#    - pipenv run flake8 .
-#
+flake8:
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+  script:
+    - pipenv run flake8 .
+
 #
 #codequality:
 #  image: docker:latest
