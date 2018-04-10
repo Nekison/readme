@@ -20,20 +20,14 @@ build:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
-#test:
-#  image: python:3
-#
-#  cache:
-#    paths:
-#      - "$CI_PROJECT_DIR/pip-cache"
-#
-#  services:
-#    - redis
-#
-#  script:
-#    - pip install pipenv
-#    - pipenv install -d
-#    - pipenv run nosetests
+test:
+  image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+  services:
+    - redis
+
+  script:
+    - pipenv run nosetests
 
 editorconfig:check:
   image: node:6
