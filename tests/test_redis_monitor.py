@@ -16,8 +16,9 @@ class TestRedisMonitor(unittest.TestCase):
 
     def setUp(self):
         """Redis Monitor test case setup."""
-        self.redis = redis.Redis("redis")
-        self.monitor = redis_monitor.RedisMonitor()
+        pool = redis.ConnectionPool(host="redis", port=6379, db=0)
+        self.redis = redis.Redis(connection_pool=pool)
+        self.monitor = redis_monitor.RedisMonitor(pool)
 
     def test_monitor_return_iterable(self):
         """Test that monitor() method produce an iterable."""
