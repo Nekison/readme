@@ -29,7 +29,7 @@ test:
   script:
     - pipenv run nosetests
 
-editorconfig:check:
+editorconfig-check:
   image: node:6
 
   # Cache NPM locally installed packages
