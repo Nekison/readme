@@ -4,7 +4,6 @@ Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
 
-import os
 import unittest
 
 from rtdb_sync_pub import redis_command_filter

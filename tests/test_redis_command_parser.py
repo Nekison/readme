@@ -93,5 +93,6 @@ class TestParseResponses(unittest.TestCase):
         except TypeError:
             self.fail("monitor() return value is not iterable")
 
+
 if __name__ == '__main__':
     unittest.main()
