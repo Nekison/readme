@@ -4,7 +4,6 @@ Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
 
-import datetime
 
 __all__ = ["parse_response"]
 
