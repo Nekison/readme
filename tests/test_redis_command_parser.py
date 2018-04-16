@@ -72,5 +72,26 @@ class TestParseResponse(unittest.TestCase):
         self.assertTrue("arguments" in command)
 
 
+class TestParseResponses(unittest.TestCase):
+    """parse_responses function test case."""
+
+    def setUp(self):
+        """parse_response method test case setup."""
+        script_dir = os.path.dirname(__file__)
+        rel_path = "./valid-redis-command.txt"
+        abs_file_path = os.path.join(script_dir, rel_path)
+
+        with open(abs_file_path, "rb") as f:
+            self.responses = [f.read()]
+
+    def test_return_iterable(self):
+        """Test that function produce an iterable."""
+        result = redis_command_parser.parse_responses(self.responses)
+
+        try:
+            iter(result)
+        except TypeError:
+            self.fail("monitor() return value is not iterable")
+
 if __name__ == '__main__':
     unittest.main()
