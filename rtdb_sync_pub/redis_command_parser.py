@@ -30,8 +30,7 @@ def parse_response(response):
     if len(parts) == 1:
         raise Exception("Invalid number of arguments")
 
-    epoch = float(parts[0].strip())
-    command["timestamp"] = datetime.datetime.fromtimestamp(epoch)
+    command["timestamp"] = float(parts[0].strip())
 
     command["database"] = parts[1][1:]
 
