@@ -5,7 +5,7 @@ All rights reserved.
 """
 
 
-__all__ = ["parse_response"]
+__all__ = ["parse_response", "parse_responses"]
 
 
 def parse_response(response):
@@ -44,3 +44,17 @@ def parse_response(response):
         command["arguments"] = parts[3:]
 
     return command
+
+
+def parse_responses(response_iter):
+    """Parse Redis response messages.
+
+    Produce an iterable of Redis commands.
+    :param response_iter: An iterable of Redis responses.
+    """
+    for response in response_iter:
+        try:
+            yield parse_response(response)
+        except Exception as e:
+            print("An Exception was rised on the parse_responses() generator")
+            print(str(e))
