@@ -56,5 +56,5 @@ def parse_responses(response_iter):
         try:
             yield parse_response(response)
         except Exception as e:
-            print("An Exception was rised on the parse_responses() generator")
+            print("An Exception was raised on the parse_responses() generator")
             print(str(e))
