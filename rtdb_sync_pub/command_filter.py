@@ -4,6 +4,10 @@ Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
 
+import typing
+
+from . import command
+
 __all__ = ["filter_commands"]
 
 DEFAULT_ALLOWED_COMMANDS = {
@@ -11,7 +15,9 @@ DEFAULT_ALLOWED_COMMANDS = {
 }
 
 
-def filter_commands(commands_iter, allowed_commands=DEFAULT_ALLOWED_COMMANDS):
+def filter_commands(commands_iter: typing.Iterable[command.Command],
+                    allowed_commands: set=DEFAULT_ALLOWED_COMMANDS) \
+        -> typing.Iterable[command.Command]:
     """Filter Redis commands based on a pre-defined set of allowed ones.
 
     Produce an iterable of Redis commands filtered with just the allowed ones.
@@ -21,6 +27,5 @@ def filter_commands(commands_iter, allowed_commands=DEFAULT_ALLOWED_COMMANDS):
     :param commands_iter: Iterable source of commands.
     :param allowed_commands: Set of allowed commands.
     """
-    for command in commands_iter:
-        if command["command"] in allowed_commands:
-            yield command
+    [(yield comm) for comm in commands_iter
+        if comm.command in allowed_commands]
