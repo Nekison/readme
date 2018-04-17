@@ -1,4 +1,4 @@
-"""Provide test cases for rtdb_sync_pub.redis_command_parser module.
+"""Provide test cases for rtdb_sync_pub.command_parser module.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
@@ -7,7 +7,7 @@ All rights reserved.
 import os
 import unittest
 
-from rtdb_sync_pub import redis_command_parser
+from rtdb_sync_pub import command_parser
 
 
 class TestParseResponse(unittest.TestCase):
@@ -25,49 +25,49 @@ class TestParseResponse(unittest.TestCase):
     def test_raise_exception_inv_number_args(self):
         """Test parse_response() raise exception if body is not command."""
         try:
-            redis_command_parser.parse_response(b"OK")
+            command_parser.parse_response(b"OK")
         except Exception as e:
             self.assertEqual(e.args[0], "Invalid number of arguments")
 
     def test_return_dict(self):
         """Test that parse_response() return a dictionary."""
-        command = redis_command_parser.parse_response(self.response)
+        command = command_parser.parse_response(self.response)
 
         self.assertTrue(isinstance(command, dict))
 
     def test_return_dict_has_timestamp(self):
         """Test that return dictionary has timestamp attr."""
-        command = redis_command_parser.parse_response(self.response)
+        command = command_parser.parse_response(self.response)
 
         self.assertTrue("timestamp" in command)
 
     def test_return_dict_has_database(self):
         """Test that return dictionary has database attr."""
-        command = redis_command_parser.parse_response(self.response)
+        command = command_parser.parse_response(self.response)
 
         self.assertTrue("database" in command)
 
     def test_return_dict_has_client(self):
         """Test that return dictionary has client attr."""
-        command = redis_command_parser.parse_response(self.response)
+        command = command_parser.parse_response(self.response)
 
         self.assertTrue("client" in command)
 
     def test_return_dict_has_command(self):
         """Test that return dictionary has command attr."""
-        command = redis_command_parser.parse_response(self.response)
+        command = command_parser.parse_response(self.response)
 
         self.assertTrue("command" in command)
 
     def test_return_dict_has_key_name(self):
         """Test that return dictionary has key_name attr."""
-        command = redis_command_parser.parse_response(self.response)
+        command = command_parser.parse_response(self.response)
 
         self.assertTrue("key_name" in command)
 
     def test_return_dict_has_arguments(self):
         """Test that return dictionary has arguments attr."""
-        command = redis_command_parser.parse_response(self.response)
+        command = command_parser.parse_response(self.response)
 
         self.assertTrue("arguments" in command)
 
@@ -86,7 +86,7 @@ class TestParseResponses(unittest.TestCase):
 
     def test_return_iterable(self):
         """Test that function produce an iterable."""
-        result = redis_command_parser.parse_responses(self.responses)
+        result = command_parser.parse_responses(self.responses)
 
         try:
             iter(result)

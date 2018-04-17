@@ -1,4 +1,4 @@
-"""Provide test cases for rtdb_sync_pub.redis_monitor module.
+"""Provide test cases for rtdb_sync_pub.monitor module.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
@@ -9,17 +9,17 @@ import unittest
 
 import redis
 
-from rtdb_sync_pub import redis_monitor
+from rtdb_sync_pub import monitor
 
 
-class TestRedisMonitor(unittest.TestCase):
+class TestMonitor(unittest.TestCase):
     """RedisMonitor test case."""
 
     def setUp(self):
         """Redis Monitor test case setup."""
         pool = redis.ConnectionPool(host="redis", port=6379, db=0)
         self.redis = redis.Redis(connection_pool=pool)
-        self.monitor = redis_monitor.RedisMonitor(pool)
+        self.monitor = monitor.RedisMonitor(pool)
 
     def test_monitor_return_iterable(self):
         """Test that monitor() method produce an iterable."""

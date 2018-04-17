@@ -1,4 +1,4 @@
-"""Provide test cases for rtdb_sync_pub.redis_command_filter module.
+"""Provide test cases for rtdb_sync_pub.command_filter module.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
@@ -6,7 +6,7 @@ All rights reserved.
 
 import unittest
 
-from rtdb_sync_pub import redis_command_filter
+from rtdb_sync_pub import command_filter
 
 
 class TestFilterCommands(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestFilterCommands(unittest.TestCase):
 
     def test_return_iterable(self):
         """Test that monitor() method produce an iterable."""
-        filter_commands_result = redis_command_filter.filter_commands([])
+        filter_commands_result = command_filter.filter_commands([])
 
         try:
             iter(filter_commands_result)
