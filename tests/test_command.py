@@ -1,4 +1,4 @@
-"""Provide test cases for rtdb_sync_pub.command_parser module.
+"""Provide test cases for rtdb_sync_pub.command module.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
@@ -7,7 +7,7 @@ All rights reserved.
 import os
 import unittest
 
-from rtdb_sync_pub import command_parser
+from rtdb_sync_pub import command
 
 
 class TestParseResponse(unittest.TestCase):
@@ -25,51 +25,51 @@ class TestParseResponse(unittest.TestCase):
     def test_raise_exception_inv_number_args(self):
         """Test parse_response() raise exception if body is not command."""
         try:
-            command_parser.parse_response(b"OK")
+            command.parse_response(b"OK")
         except Exception as e:
             self.assertEqual(e.args[0], "Invalid number of arguments")
 
-    def test_return_dict(self):
+    def test_return_Command(self):
         """Test that parse_response() return a dictionary."""
-        command = command_parser.parse_response(self.response)
+        comm = command.parse_response(self.response)
 
-        self.assertTrue(isinstance(command, dict))
+        self.assertTrue(isinstance(comm, command.Command))
 
-    def test_return_dict_has_timestamp(self):
+    def test_return_command_has_timestamp(self):
         """Test that return dictionary has timestamp attr."""
-        command = command_parser.parse_response(self.response)
+        comm = command.parse_response(self.response)
 
-        self.assertTrue("timestamp" in command)
+        self.assertTrue(hasattr(comm, "timestamp"))
 
-    def test_return_dict_has_database(self):
+    def test_return_command_has_database(self):
         """Test that return dictionary has database attr."""
-        command = command_parser.parse_response(self.response)
+        comm = command.parse_response(self.response)
 
-        self.assertTrue("database" in command)
+        self.assertTrue(hasattr(comm, "database"))
 
-    def test_return_dict_has_client(self):
+    def test_return_command_has_client(self):
         """Test that return dictionary has client attr."""
-        command = command_parser.parse_response(self.response)
+        comm = command.parse_response(self.response)
 
-        self.assertTrue("client" in command)
+        self.assertTrue(hasattr(comm, "client"))
 
-    def test_return_dict_has_command(self):
+    def test_return_command_has_command(self):
         """Test that return dictionary has command attr."""
-        command = command_parser.parse_response(self.response)
+        comm = command.parse_response(self.response)
 
-        self.assertTrue("command" in command)
+        self.assertTrue(hasattr(comm, "command"))
 
-    def test_return_dict_has_key_name(self):
+    def test_return_command_has_key_name(self):
         """Test that return dictionary has key_name attr."""
-        command = command_parser.parse_response(self.response)
+        comm = command.parse_response(self.response)
 
-        self.assertTrue("key_name" in command)
+        self.assertTrue(hasattr(comm, "key_name"))
 
-    def test_return_dict_has_arguments(self):
+    def test_return_command_has_arguments(self):
         """Test that return dictionary has arguments attr."""
-        command = command_parser.parse_response(self.response)
+        comm = command.parse_response(self.response)
 
-        self.assertTrue("arguments" in command)
+        self.assertTrue(hasattr(comm, "arguments"))
 
 
 class TestParseResponses(unittest.TestCase):
@@ -86,7 +86,7 @@ class TestParseResponses(unittest.TestCase):
 
     def test_return_iterable(self):
         """Test that function produce an iterable."""
-        result = command_parser.parse_responses(self.responses)
+        result = command.parse_responses(self.responses)
 
         try:
             iter(result)
