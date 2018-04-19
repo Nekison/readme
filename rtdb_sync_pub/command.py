@@ -1,4 +1,4 @@
-"""Provide Redis command class.
+"""Provide Time Database Command class.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
@@ -28,9 +28,9 @@ class Command:
 
 
 def parse_response(response: bytes) -> Command:
-    """Parse a Redis response.
+    """Parse a Real Time Database monitor response message.
 
-    Produce a dictionary containing the parts that compose the command.
+    Produce a Command containing the parts that compose the message.
     """
     comm = Command()
 
@@ -43,7 +43,7 @@ def parse_response(response: bytes) -> Command:
 
     comm.timestamp = float(parts[0].strip())
 
-    comm.database = parts[1][1:]
+    comm.database = int(parts[1][1:])
 
     comm.client = parts[2][:-1]
 
@@ -60,9 +60,9 @@ def parse_response(response: bytes) -> Command:
 
 def parse_responses(response_iter: typing.Iterable[bytes]) \
         -> typing.Iterable[Command]:
-    """Parse Redis response messages.
+    """Parse Real Time Database Command monitor response messages.
 
-    Produce an iterable of Redis commands.
+    Produce an iterable of Real Time Database commands.
     :param response_iter: An iterable of Redis responses.
     """
     for response in response_iter:
