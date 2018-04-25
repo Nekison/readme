@@ -49,11 +49,11 @@ def parse_response(response: bytes) -> Command:
 
     comm.command = parts[3].replace('"', '').upper()
 
-    if len(parts) > 2:
+    if len(parts) > 4:
         comm.key_name = parts[4].replace('"', '').strip()
 
-    if len(parts) > 3:
-        comm.arguments = parts[3:]
+    if len(parts) > 5:
+        comm.arguments = parts[5:]
 
     return comm
 
