@@ -20,6 +20,29 @@ build:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
+build-deb:
+  stage: build
+
+  image: ubuntu
+
+  script:
+    - apt-get update
+    - apt-get upgrade -yy
+    - apt-get install -yy python-all python3-all python3-dev python3-pip python3-setuptools dh-python debhelper
+    - pip3 install pipenv
+    - export LC_ALL=C.UTF-8
+    - export LANG=C.UTF-8
+    - pipenv install --system -d
+    - python3 ./setup.py --command-packages=stdeb.command bdist_deb
+
+  artifacts:
+    paths:
+      - deb_dist/*.deb
+
+  only:
+    - master
+
+
 test:
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
 
