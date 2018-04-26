@@ -9,6 +9,7 @@ name = "pypi"
 
 redis = "*"
 hiredis = "*"
+paho-mqtt = "*"
 
 
 [dev-packages]
@@ -16,6 +17,7 @@ hiredis = "*"
 "flake8" = "*"
 nose = "*"
 "flake8-docstrings" = "*"
+stdeb = "*"
 
 
 [requires]

@@ -1,6 +1,11 @@
 
 # IDE specific files
 /.idea/
+/.vscode/
 
 # Python cache files
 __pycache__
+
+# Python dist files
+/dist/
+/deb_dist/

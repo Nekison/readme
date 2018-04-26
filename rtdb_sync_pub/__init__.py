@@ -4,7 +4,7 @@ Copyright (c) 2018, Sorbotics LLC.]
 All rights reserved.
 """
 
-__all__ = ["version"]
+__all__ = ["__version__"]
 
 
-version = "0.1.0"
+__version__ = "0.1.0"
