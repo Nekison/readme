@@ -9,3 +9,6 @@ __pycache__
 # Python dist files
 /dist/
 /deb_dist/
+/.eggs/
+/rtdb_sync_pub.egg-info/
+/rtdb-sync-pub-*.tar.gz
