@@ -23,18 +23,20 @@ build:
 build-deb:
   stage: build
 
-  image: ubuntu
+  image: debian
 
   script:
     - apt-get update
     - apt-get install -yy devscripts
     - apt-get build-dep -yy .
     - debuild -b -uc -us
+    - mkdir build
+    - mv ../*.deb build/
 
   artifacts:
     when: on_success
     paths:
-      - ../*.deb
+      - build/*.deb
 
   only:
     - master
