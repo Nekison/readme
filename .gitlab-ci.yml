@@ -27,7 +27,7 @@ build-deb:
 
   script:
     - apt-get update
-    - apt-get upgrade -yy
+    #- apt-get upgrade -yy
     #- apt-get install -yy python3-all python3-setuptools dh-python debhelper
     - apt-get install -yy devscripts equivs
     - mk-build-deps -ir
