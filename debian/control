@@ -1,0 +1,28 @@
+Source: rtdb-sync-pub
+Maintainer: Yeiniel Suarez Sosa <yeiniel@gmail.com>
+Section: python
+Priority: optional
+Build-Depends: python3-setuptools, python3-all, debhelper (>= 7.4.3)
+Standards-Version: 3.9.1
+
+
+
+
+
+Package: python3-rtdb-sync-pub
+Architecture: all
+Depends: ${misc:Depends}, ${python3:Depends}
+Description: # Real Time Database Synchronization Publisher
+ # Real Time Database Synchronization Publisher
+ [![pipeline status](https://gitlab.com/sorbotics/rtdb-sync-pub/badges/master/pipeline.svg)](https://gitlab.com/sorbotics/rtdb-sync-pub/commits/master)
+ .
+ Publish Real Time Database events in order to synchronize two instances of the 
+ Real Time Database.
+ .
+ ## Building Debian package
+ .
+ The `Pipfile` include a dev-dependency used for this purpose. Use the command:
+ .
+     pipenv run python setup.py --command-packages=stdeb.command bdist_deb
+ .
+

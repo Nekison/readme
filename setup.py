@@ -12,15 +12,6 @@ from setuptools.command.install import install
 import rtdb_sync_pub
 
 
-class PostInstallCommand(install):
-    """Post-installation for installation mode."""
-
-    def run(self):
-        """Run at post install."""
-        subprocess.check_call(['pipenv', 'install', '--deploy', '--system'])
-        install.run(self)
-
-
 with open('README.md', encoding='utf-8') as f:
     long_description = f.read()
     description = long_description.split('\n', 1)[0]
@@ -39,7 +30,9 @@ setup(
             "rtdb_sync_pub = rtdb_sync_pub.launcher"
         ]
     },
-    cmdclass={
-        'install': PostInstallCommand,
-    },
+    install_requires=[
+        "hiredis==0.2.0",
+        "paho-mqtt==1.3.1",
+        "redis==2.10.6"
+    ]
 )
