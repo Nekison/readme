@@ -5,9 +5,7 @@ Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
 
-import subprocess
 from setuptools import setup, find_packages
-from setuptools.command.install import install
 
 import rtdb_sync_pub
 
