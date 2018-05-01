@@ -17,7 +17,6 @@ paho-mqtt = "*"
 "flake8" = "*"
 nose = "*"
 "flake8-docstrings" = "*"
-stdeb = "*"
 
 
 [requires]
