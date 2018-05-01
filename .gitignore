@@ -12,3 +12,4 @@ __pycache__
 /.eggs/
 /rtdb_sync_pub.egg-info/
 /rtdb-sync-pub-*.tar.gz
+/.pybuild/
