@@ -1,6 +1,6 @@
 """Real Time Dabase sync publisher.
 
-Copyright (c) 2018, Sorbotics LLC.]
+Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
 
