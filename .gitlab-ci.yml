@@ -23,7 +23,7 @@ build:
 build-deb:
   stage: build
 
-  image: debian:8
+  image: debian
 
   script:
     - apt-get update
