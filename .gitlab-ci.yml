@@ -39,7 +39,7 @@ build-deb:
       - build/*.deb
 
   only:
-    - master
+    - tags
 
 
 test:
