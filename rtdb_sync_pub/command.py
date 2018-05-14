@@ -1,4 +1,4 @@
-"""Provide Time Database Command class.
+"""Provide Real Time Database Command class.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
