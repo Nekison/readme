@@ -29,6 +29,7 @@ setup(
         ]
     },
     install_requires=[
+        "configargparse==0.13.0",
         "hiredis==0.2.0",
         "paho-mqtt==1.3.1",
         "redis==2.10.6"

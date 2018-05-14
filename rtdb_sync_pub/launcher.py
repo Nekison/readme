@@ -8,9 +8,10 @@ All rights reserved.
 import json
 
 import redis
+import configargparse
 import paho.mqtt.client as mqtt
 
-from . import monitor, command, filter, transform
+from . import monitor, command, filter, transform, config
 
 
 def mqtt_on_connect(client, userdata, flags, rc):
@@ -32,8 +33,16 @@ def mqtt_on_publish(client, userdata, result):
 if __name__ == '__main__':
     print("Starting Real Time Database Synchronization Publisher")
 
+    arg_parser = config.setup_parser(configargparse.ArgParser())
+
+    args = arg_parser.parse_args()
+
+    # print application configuration
+    print(arg_parser.format_values())
+
     # pool = redis.ConnectionPool(host='192.168.1.141', port=6379, db=0)
-    pool = redis.ConnectionPool(host='redis', port=6379, db=0)
+    pool = redis.ConnectionPool(host=args.redis_host, port=6379,
+                                db=args.redis_db)
     r = redis.Redis(connection_pool=pool)
 
     client = mqtt.Client()
@@ -44,7 +53,7 @@ if __name__ == '__main__':
     client.enable_logger()
     client.loop_start()
 
-    client.connect_async("mqtt-broker")
+    client.connect_async(args.mqtt_host)
 
     monitor = monitor.RedisMonitor(pool)
     filter_queue = filter.CommandFilterQueue()
@@ -56,7 +65,7 @@ if __name__ == '__main__':
             filter_queue.filter(
             filter.filter_target_database(
             command.parse_responses(monitor.monitor())))),
-            "rtdb/sorbasoft.net/device0/"):
+            args.mqtt_topic):
 
         print(comm.__dict__)
 
