@@ -11,7 +11,7 @@ Standards-Version: 3.9.1
 
 Package: python3-rtdb-sync-pub
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}
+Depends: ${misc:Depends}, ${python3:Depends}, redis-server
 Description: Real Time Database Synchronization Publisher
  Publish Real Time Database events in order to synchronize two instances of the
  Real Time Database.
