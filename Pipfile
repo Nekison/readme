@@ -18,8 +18,9 @@ configargparse = "*"
 "flake8" = "*"
 nose = "*"
 "flake8-docstrings" = "*"
+coverage = "*"
 
 
 [requires]
 
-python_version = "3.5"
+python_version = "3"

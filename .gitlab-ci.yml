@@ -50,7 +50,7 @@ test:
 
   script:
     - pipenv install --system -d
-    - nosetests
+    - nosetests --with-coverage
 
 editorconfig-check:
   image: node:6
