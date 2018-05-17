@@ -2,7 +2,7 @@ Source: rtdb-sync-pub
 Maintainer: Yeiniel Suarez Sosa <yeiniel@gmail.com>
 Section: python
 Priority: optional
-Build-Depends: python3-setuptools, python3-all, debhelper (>= 7.4.3)
+Build-Depends: python3-setuptools, python3-all, debhelper (>= 10)
 Standards-Version: 3.9.1
 
 

@@ -13,17 +13,17 @@
 
 set -u
 
-SCRIPT="python3 -m rtdb-sync-pub -c etc/rtdb-sync-pub.cfg"
-USER="rtdb-sync-pub"
-NAME="rtdb-sync-pub"
-WORKING_DIRECTORY="/usr/share/rtdb-sync-pub"
+SCRIPT="/usr/bin/python3 -m rtdb_sync_pub.launcher -c etc/rtdb-sync-pub.cfg"
+USER="python3-rtdb-sync-pub"
+NAME="python3-rtdb-sync-pub"
+WORKING_DIRECTORY="/usr/share/python3-rtdb-sync-pub"
 DESCRIPTION="Real Time Database Synchronization Publisher"
 
 . /lib/lsb/init-functions
-. "/etc/default/rtdb-sync-pub"
+. "/etc/default/python3-rtdb-sync-pub"
 
-LOGDIR="/var/log/rtdb-sync-pub"
-LOGFILE="$LOGDIR/rtdb-sync-pub.log"
+LOGDIR="/var/log/python3-rtdb-sync-pub"
+LOGFILE="$LOGDIR/python3-rtdb-sync-pub.log"
 
 mkdir -p "$LOGDIR"
 chown -R "rtdb-sync-pub:rtdb-sync-pub" "$LOGDIR"

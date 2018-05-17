@@ -1,3 +1,1 @@
-debian-files/etc/* etc
-debian-files/lib/* lib
 debian-files/usr/* usr
