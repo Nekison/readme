@@ -22,25 +22,25 @@ class TestSetupParser(unittest.TestCase):
     def test_it_set_mqtt_host_attr(self):
         """Test that mqtt_host attribute is set in product."""
         arg_parser = configargparse.ArgParser()
-        args = config.setup_parser(arg_parser).parse_args()
+        args = config.setup_parser(arg_parser).parse_args(args=[])
         self.assertIn("mqtt_host", args)
 
     def test_it_set_mqtt_topic_attr(self):
         """Test that mqtt_topic attribute is set in product."""
         arg_parser = configargparse.ArgParser()
-        args = config.setup_parser(arg_parser).parse_args()
+        args = config.setup_parser(arg_parser).parse_args(args=[])
         self.assertIn("mqtt_topic", args)
 
     def test_it_set_redis_host_attr(self):
         """Test that redis_host attribute is set in product."""
         arg_parser = configargparse.ArgParser()
-        args = config.setup_parser(arg_parser).parse_args()
+        args = config.setup_parser(arg_parser).parse_args(args=[])
         self.assertIn("redis_host", args)
 
     def test_it_set_redis_db_attr(self):
         """Test that redis_db attribute is set in product."""
         arg_parser = configargparse.ArgParser()
-        args = config.setup_parser(arg_parser).parse_args()
+        args = config.setup_parser(arg_parser).parse_args(args=[])
         self.assertIn("redis_db", args)
 
 
