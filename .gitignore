@@ -13,3 +13,6 @@ __pycache__
 /rtdb_sync_pub.egg-info/
 /rtdb-sync-pub-*.tar.gz
 /.pybuild/
+
+# Test coverage report
+/.coverage
