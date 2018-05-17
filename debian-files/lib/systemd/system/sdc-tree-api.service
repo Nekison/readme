@@ -1,0 +1,17 @@
+
+[Unit]
+Description=Real Time Database Synchronization Publisher
+Requires=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/default/rtdb-sync-pub
+WorkingDirectory=/usr/share/rtdb-sync-pub
+ExecStart=python3 -m rtdb-sync-pub -c etc/rtdb-sync-pub.cfg
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=always
+User=sdc-tree-api
+PermissionsStartOnly=true
+
+[Install]
+WantedBy=multi-user.target

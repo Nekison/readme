@@ -11,6 +11,13 @@ __all__ = ["setup_parser"]
 
 def setup_parser(parser: configargparse.ArgParser) -> configargparse.ArgParser:
     """Set up ArgParser instance for this application."""
+    parser.add("-c",
+               "--config",
+               required=False,
+               is_config_file=True,
+               help="Real Time Database Synchronization Publisher "
+                    "configuration file path")
+
     parser.add("--mqtt-host",
                type=str,
                action="store",
