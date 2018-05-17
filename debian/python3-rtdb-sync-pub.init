@@ -25,7 +25,7 @@ LOGDIR="/var/log/python3-rtdb-sync-pub"
 LOGFILE="$LOGDIR/python3-rtdb-sync-pub.log"
 
 mkdir -p "$LOGDIR"
-chown -R "rtdb-sync-pub:rtdb-sync-pub" "$LOGDIR"
+chown -R "python3-rtdb-sync-pub:python3-rtdb-sync-pub" "$LOGDIR"
 
 do_start() {
   start-stop-daemon --start \
