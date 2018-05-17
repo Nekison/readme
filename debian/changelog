@@ -1,3 +1,9 @@
+rtdb-sync-pub (0.3.0-3) unstable; urgency=low
+
+  * Fixed init.d script for debian packaging
+
+ -- Yeiniel Suarez Sosa <yeiniel@gmail.com>  Thu, 17 May 2018 17:30:01 -0500
+
 rtdb-sync-pub (0.3.0-2) unstable; urgency=low
 
   * Updated debian packaging to install service launchers the right way
