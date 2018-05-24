@@ -10,3 +10,14 @@ Following policies apply to the development of this project:
  - [General Policies](https://gitlab.com/sorbotics/developer-website/blob/master/policies/general-policies.md)
  - [Policies for Server Side development using the Python programming language](https://gitlab.com/sorbotics/developer-website/blob/master/policies/server-side/python.md)
 
+## Setup
+
+This application use [pipenv](https://docs.pipenv.org) as dependency management 
+tool. You can simply install it using the following command:
+
+    pip install pipenv
+
+Execute the following command to create a virtual environment for the 
+application and install all its dependencies:
+
+    pipenv install
