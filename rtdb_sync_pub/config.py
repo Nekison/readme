@@ -22,24 +22,28 @@ def setup_parser(parser: configargparse.ArgParser) -> configargparse.ArgParser:
                type=str,
                action="store",
                default="mqtt-broker",
+               env_var='MQTT_HOST',
                help="MQTT broker to connect to")
 
     parser.add("--mqtt-topic",
                type=str,
                action="store",
                default="/",
+               env_var='MQTT_TOPIC'
                help="MQTT topic to listen to messages")
 
     parser.add("--redis-host",
                type=str,
                action="store",
                default="redis",
+               env_var='REDIS_HOST'
                help="Redis host to connect to")
 
     parser.add("--redis-db",
                type=int,
                action="store",
                default=0,
+               env_var='REDIS_DB'
                help="Redis database to connect to")
 
     return parser
