@@ -82,7 +82,6 @@ class CommandFilterQueue:
 
         # TODO: need to compare all arguments
         return el.database is comm.database \
-            and el.timestamp is comm.timestamp \
             and el.command is comm.command \
             and el.key_name is comm.key_name
 
