@@ -13,7 +13,7 @@ __all__ = ["filter_allowed_commands", "filter_target_database",
            "CommandFilterQueue"]
 
 ALLOWED_COMMANDS = {
-    "SET"
+    "SET", "RLPUSH"
 }
 
 TARGET_DATABASE = 0
