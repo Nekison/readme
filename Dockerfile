@@ -11,4 +11,4 @@ RUN pipenv install --system
 
 COPY . /app/
 
-CMD ["python", "-m", "rtdb_sync_pub.launcher"]
+CMD ["python", "-u", "-m", "rtdb_sync_pub.launcher"]
