@@ -25,6 +25,24 @@ def setup_parser(parser: configargparse.ArgParser) -> configargparse.ArgParser:
                env_var='MQTT_HOST',
                help="MQTT broker to connect to")
 
+    parser.add("--mqtt-port",
+               type=int,
+               action="store",
+               default=1883,
+               help="Inet port to connect to")
+
+    parser.add("--mqtt-ca-certs",
+               type=str,
+               action="store",
+               default=None,
+               help="MQTT Certificate Authority certificate files")
+
+    parser.add("--mqtt-tls-insecure",
+               type=bool,
+               action="store",
+               default=False,
+               help="MQTT TLS is insecure")
+
     parser.add("--mqtt-topic",
                type=str,
                action="store",

@@ -51,6 +51,12 @@ if __name__ == '__main__':
     client.on_connect = mqtt_on_connect
     client.on_publish = mqtt_on_publish
     client.enable_logger()
+
+    if args.mqtt_port != 1883:
+        client.tls_set(ca_certs=args.mqtt_ca_certs)
+
+        client.tls_insecure_set(args.mqtt_tls_insecure)
+
     client.loop_start()
 
     client.connect_async(args.mqtt_host)
