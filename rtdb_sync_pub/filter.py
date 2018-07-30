@@ -13,7 +13,7 @@ __all__ = ["filter_allowed_commands", "filter_target_database",
            "CommandFilterQueue"]
 
 ALLOWED_COMMANDS = {
-    "SET", "LPUSH"
+    "SET", "LPUSH", "RPUSH"
 }
 
 TARGET_DATABASE = 0
@@ -94,6 +94,7 @@ class CommandFilterQueue:
         for comm in commands_iter:
             # if command is directed to the queue store it for latter use
             if self._is_queue_command(comm):
+                print("Adding queue command {}".format(comm))
                 self._register_command(comm)
             elif self._find_command(comm):
                 self._unregister_command(comm)

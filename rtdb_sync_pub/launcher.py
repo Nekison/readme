@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
     client.loop_start()
 
-    client.connect_async(args.mqtt_host)
+    client.connect_async(args.mqtt_host, args.mqtt_port)
 
     monitor = monitor.RedisMonitor(pool)
     filter_queue = filter.CommandFilterQueue()
@@ -70,10 +70,8 @@ if __name__ == '__main__':
             filter.filter_allowed_commands(
             filter_queue.filter(
             filter.filter_target_database(
-            command.parse_responses(monitor.monitor())))),
+            command.parse_responses(monitor.monitor()), args.redis_db))),
             args.mqtt_topic):
-
-        print(comm.__dict__)
 
         result = client.publish(comm.key_name, json.dumps(comm.__dict__), 1)
         print("MQTT Message Publish called for topic {} with result {}"

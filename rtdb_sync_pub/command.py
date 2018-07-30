@@ -9,6 +9,8 @@ import typing
 __all__ = ["Command", "parse_response", "parse_responses"]
 
 
+strip_slashes = lambda argument: argument.strip('"').replace('\\"', '"')
+
 class Command:
     """Real Time Database Command.
 
@@ -53,7 +55,7 @@ def parse_response(response: bytes) -> Command:
         comm.key_name = parts[4].replace('"', '').strip()
 
     if len(parts) > 5:
-        comm.arguments = parts[5:]
+        comm.arguments = list(map(strip_slashes, parts[5:]))
 
     return comm
 
