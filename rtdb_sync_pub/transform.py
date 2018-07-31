@@ -8,7 +8,7 @@ import typing
 
 from . import command
 
-__all__ = ["prefix_key_name"]
+__all__ = ["prefix_key_name", "set_agent"]
 
 
 def prefix_key_name(commands_iter: typing.Iterable[command.Command],
@@ -20,4 +20,14 @@ def prefix_key_name(commands_iter: typing.Iterable[command.Command],
     """
     for comm in commands_iter:
         comm.key_name = "{}{}".format(prefix, comm.key_name)
+        yield comm
+
+def set_agent(commands_iter: typing.Iterable[command.Command], agent: str) -> typing.Iterable[command.Command]: 
+    """Set Real Time Database command agent.
+
+    :param commands_iter: Iterable source of commands.
+    :param agent: Agent Unique Identifier.
+    """
+    for comm in commands_iter:
+        comm.agent = agent
         yield comm
