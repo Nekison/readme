@@ -64,4 +64,11 @@ def setup_parser(parser: configargparse.ArgParser) -> configargparse.ArgParser:
                env_var='REDIS_DB',
                help="Redis database to connect to")
 
+    parser.add("--agent-id",
+               type=str,
+               action="store",
+               default="root-rtdb",
+               env_var='AGENT_ID',
+               help="Process agent used to complement the sync")
+
     return parser
