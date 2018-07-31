@@ -17,7 +17,7 @@ class Command:
     """
 
     def __init__(self, timestamp=None, database=None, client=None,
-                 command=None, key_name=None, arguments=None):
+                 command=None, key_name=None, arguments=None, agent=None):
         """Initialize command."""
         self.timestamp = timestamp
         self.database = database
@@ -25,6 +25,7 @@ class Command:
         self.command = command
         self.key_name = key_name
         self.arguments = arguments
+        self.agent = agent
 
 
 def parse_response(response: bytes) -> Command:
