@@ -21,6 +21,7 @@ class TestPrefixKeyName(unittest.TestCase):
         except TypeError:
             self.fail("prefix_key_name() return value is not iterable")
 
+
 class TestSetAgent(unittest.TestCase):
     """set_agent function test case."""
 
