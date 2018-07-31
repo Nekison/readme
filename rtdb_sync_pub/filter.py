@@ -60,7 +60,7 @@ class CommandFilterQueue:
         self.commands = list()
 
     def _is_queue_command(self, comm: command.Command) -> bool:
-        return comm.key_name is self.key_name
+        return comm.key_name == self.key_name
 
     def _register_command(self, comm: command.Command):
         # ignore queue commands that do not add elements to the queue
