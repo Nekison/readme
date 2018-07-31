@@ -66,12 +66,13 @@ if __name__ == '__main__':
 
     print("Starting Real Time Database monitoring")
 
-    for comm in transform.prefix_key_name(
+    for comm in transform.set_agent(
+            transform.prefix_key_name(
             filter.filter_allowed_commands(
             filter_queue.filter(
             filter.filter_target_database(
             command.parse_responses(monitor.monitor()), args.redis_db))),
-            args.mqtt_topic):
+            args.mqtt_topic), args.agent_id):
 
         result = client.publish(comm.key_name, json.dumps(comm.__dict__), 1)
         print("MQTT Message Publish called for topic {} with result {}"
