@@ -1,4 +1,4 @@
-"""Provide Time Series Database Subscriber configuration utilities.
+"""Provide Time Series Database Publisher configuration utilities.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.

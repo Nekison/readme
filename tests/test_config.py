@@ -1,4 +1,4 @@
-"""Provide test cases for rtdb_sync_sub.config module.
+"""Provide test cases for rtdb_sync_pub.config module.
 
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
