@@ -65,9 +65,9 @@ class CommandFilterQueue:
     def _register_command(self, comm: command.Command):
         el = json.loads(''.join(comm.arguments).replace('\\\\"', '\\"'))
 
-        self.commands.append(command.Command(el["timestamp"], el["database"], None,
-                                             el["command"], el["key_name"],
-                                             el["arguments"]))
+        self.commands.append(command.Command(el["timestamp"], el["database"],
+                                             None, el["command"],
+                                             el["key_name"], el["arguments"]))
 
     def _find_command(self, comm: command.Command) -> bool:
         # skip checking if command queue is empty
@@ -75,8 +75,6 @@ class CommandFilterQueue:
             return False
 
         el = self.commands[0]
-
-
 
         # TODO: need to compare all arguments
         return el.database == comm.database \
@@ -92,10 +90,10 @@ class CommandFilterQueue:
         for comm in commands_iter:
             # if command is directed to the queue store it for latter use
             if self._is_queue_command(comm):
-                print("Adding queue command {} {}".format(comm.__dict__, len(comm.arguments)))
+                print("Adding queue command")
                 self._register_command(comm)
             elif self._find_command(comm):
-                print("Unregister queue command {}".format(comm.__dict__))
+                print("Unregister queue command")
                 self._unregister_command(comm)
             else:
                 yield comm
