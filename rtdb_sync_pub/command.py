@@ -54,9 +54,11 @@ def parse_response(response: bytes) -> Command:
         comm.key_name = parts[4].replace('"', '').strip()
 
     if len(parts) > 5:
+        arguments = ' '.join(parts[5:]).strip('\"').split('\" \"')
+
         comm.arguments = list(map(
-            lambda argument: argument.strip('"').replace('\\"', '"'),
-            parts[5:]))
+            lambda argument: argument.replace('\\"', '"'),
+            arguments))
 
     return comm
 
