@@ -12,10 +12,10 @@
 
 set -u
 
-SCRIPT="/usr/bin/python3 -m rtdb_sync_pub.launcher -c etc/rtdb-sync-pub.cfg"
+SCRIPT="/usr/bin/python3 -m rtdb_sync_pub.launcher -c etc/python3-rtdb-sync-pub/rtdb-sync-pub.cfg"
 USER="python3-rtdb-sync-pub"
 NAME="python3-rtdb-sync-pub"
-WORKING_DIRECTORY="/usr/share/python3-rtdb-sync-pub"
+WORKING_DIRECTORY="/"
 DESCRIPTION="Real Time Database Synchronization Publisher"
 
 . /lib/lsb/init-functions

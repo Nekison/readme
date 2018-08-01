@@ -6,8 +6,8 @@ Requires=network.target
 [Service]
 Type=simple
 EnvironmentFile=/etc/default/python3-rtdb-sync-pub
-WorkingDirectory=/usr/share/python3-rtdb-sync-pub
-ExecStart=/usr/bin/python3 -u -m rtdb_sync_pub.launcher -c etc/rtdb-sync-pub.cfg
+WorkingDirectory=/
+ExecStart=/usr/bin/python3 -u -m rtdb_sync_pub.launcher -c etc/python3-rtdb-sync-pub/rtdb-sync-pub.cfg
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 User=python3-rtdb-sync-pub
