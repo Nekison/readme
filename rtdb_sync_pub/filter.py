@@ -60,18 +60,14 @@ class CommandFilterQueue:
         self.commands = list()
 
     def _is_queue_command(self, comm: command.Command) -> bool:
-        return comm.key_name == self.key_name
+        return comm.key_name == self.key_name and comm.command == "RPUSH"
 
     def _register_command(self, comm: command.Command):
-        # ignore queue commands that do not add elements to the queue
-        if comm.command is not "RPUSH":
-            return
+        el = json.loads(''.join(comm.arguments).replace('\\\\"', '\\"'))
 
-        el = json.loads(comm.arguments[0])
-
-        self.commands.append(command.Command(el.timestamp, el.database, None,
-                                             el.command, el.key_name,
-                                             el.arguments))
+        self.commands.append(command.Command(el["timestamp"], el["database"], None,
+                                             el["command"], el["key_name"],
+                                             el["arguments"]))
 
     def _find_command(self, comm: command.Command) -> bool:
         # skip checking if command queue is empty
@@ -80,10 +76,12 @@ class CommandFilterQueue:
 
         el = self.commands[0]
 
+
+
         # TODO: need to compare all arguments
-        return el.database is comm.database \
-            and el.command is comm.command \
-            and el.key_name is comm.key_name
+        return el.database == comm.database \
+            and el.command == comm.command \
+            and el.key_name == comm.key_name
 
     def _unregister_command(self, comm: command.Command):
         self.commands.pop()
@@ -94,9 +92,10 @@ class CommandFilterQueue:
         for comm in commands_iter:
             # if command is directed to the queue store it for latter use
             if self._is_queue_command(comm):
-                print("Adding queue command {}".format(comm))
+                print("Adding queue command {} {}".format(comm.__dict__, len(comm.arguments)))
                 self._register_command(comm)
             elif self._find_command(comm):
+                print("Unregister queue command {}".format(comm.__dict__))
                 self._unregister_command(comm)
             else:
                 yield comm
