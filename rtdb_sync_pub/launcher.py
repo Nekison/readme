@@ -31,7 +31,8 @@ def mqtt_on_publish(client, userdata, result):
 
 
 if __name__ == '__main__':
-    print("Starting Real Time Database Synchronization Publisher Ver.", __version__)
+    print("Starting Real Time Database Synchronization Publisher Ver.",
+          __version__)
 
     arg_parser = config.setup_parser(configargparse.ArgParser())
 
