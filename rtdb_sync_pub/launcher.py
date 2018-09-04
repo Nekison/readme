@@ -11,7 +11,7 @@ import redis
 import configargparse
 import paho.mqtt.client as mqtt
 
-from . import monitor, command, filter, transform, config
+from . import __version__, monitor, command, filter, transform, config
 
 
 def mqtt_on_connect(client, userdata, flags, rc):
@@ -31,7 +31,7 @@ def mqtt_on_publish(client, userdata, result):
 
 
 if __name__ == '__main__':
-    print("Starting Real Time Database Synchronization Publisher")
+    print("Starting Real Time Database Synchronization Publisher Ver.", __version__)
 
     arg_parser = config.setup_parser(configargparse.ArgParser())
 
