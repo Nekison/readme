@@ -2,6 +2,7 @@
 # IDE specific files
 /.idea/
 /.vscode/
+/rtdb-sync-pub.iml
 
 # Python cache files
 __pycache__
