@@ -24,12 +24,12 @@ build:
 build-deb:
   stage: build
 
-  image: debian
+  image: debian:8
 
   script:
     - apt-get update
     - apt-get install -yy devscripts
-    - apt-get build-dep -yy .
+    - mk-build-deps -ir -t "apt-get --yes --no-install-recommends"
     - debuild -b -uc -us
     - mkdir build
     - mv ../*.deb build/
