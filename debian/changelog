@@ -1,3 +1,9 @@
+rtdb-sync-pub (1.0.0-1) unstable; urgency=low
+
+  * update default deployment config to use MQTTs port 443
+
+ -- Yeiniel Suarez Sosa <yeiniel@gmail.com>  Fri, 12 Oct 2018 16:51:41 -0500
+
 rtdb-sync-pub (0.7.0-2) unstable; urgency=low
 
   * update CI job to use debian:8 as build env
