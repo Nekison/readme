@@ -17,7 +17,7 @@ with open('README.md', encoding='utf-8') as f:
 setup(
     name="rtdb-sync-pub",
     version=rtdb_sync_pub.__version__,
-    url="https://gitlab.com/sorbotics/rtdb-sync-pub/",
+    url="https://gitlab.sorbasoft.net/sorbotics/rtdb/rtdb-sync-pub",
     author="Yeiniel Suarez Sosa",
     author_email="yeiniel@gmail.com",
     packages=find_packages(exclude=['tests']),
