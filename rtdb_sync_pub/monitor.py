@@ -58,4 +58,3 @@ class RedisMonitor:
             print(str(e))
             time.sleep(1)
             self._send_command_monitor()
-
