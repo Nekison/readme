@@ -46,6 +46,9 @@ class RedisMonitor:
             except ConnectionError as e:
                 print("{} while listening to the response".format(str(e)))
                 self._send_command_monitor()
+            except Exception as e:
+                print("{} while sending the monitor command".format(str(e)))
+                self._send_command_monitor()
 
     def monitor(self):
         """Produce an iterable of changes on the Redis database."""
@@ -63,6 +66,10 @@ class RedisMonitor:
             time.sleep(1)
             self._send_command_monitor()
         except ConnectionError as e:
+            print("{} while sending the monitor command".format(str(e)))
+            time.sleep(1)
+            self._send_command_monitor()
+        except Exception as e:
             print("{} while sending the monitor command".format(str(e)))
             time.sleep(1)
             self._send_command_monitor()
