@@ -6,8 +6,9 @@ All rights reserved.
 """
 
 import json
-
+import time
 import redis
+import sys
 import configargparse
 import paho.mqtt.client as mqtt
 from redis.exceptions import ConnectionError, TimeoutError
@@ -68,6 +69,10 @@ if __name__ == '__main__':
 
     print("Starting Real Time Database monitoring")
 
+    limit_time = args.limit_time
+    previous_error_time = None
+    start_time = None
+
     while True:
         try:
             for comm in transform.set_agent(
@@ -89,3 +94,20 @@ if __name__ == '__main__':
             print("{}".format(str(e)))
         except Exception as e:
             print(str(e))
+        finally:
+            if start_time is None:
+                start_time = time.time()
+            else:
+                error_time = time.time() - previous_error_time
+                if error_time >= 2:
+                    start_time = time.time()
+                else:
+                    elapsed_time = time.time() - start_time
+                    elapsed_time_int = int(elapsed_time)
+                    if elapsed_time_int >= int(limit_time):
+                        print("Error during synchronization, "
+                              "try to recover for {} seconds".
+                              format(limit_time))
+                        sys.exit(1)
+
+            previous_error_time = time.time()

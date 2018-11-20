@@ -67,6 +67,12 @@ class TestSetupParser(unittest.TestCase):
         args = config.setup_parser(arg_parser).parse_args(args=[])
         self.assertIn("agent_id", args)
 
+    def test_it_set_limit_time_attr(self):
+        """Test that limit_time attribute is set in product."""
+        arg_parser = configargparse.ArgParser()
+        args = config.setup_parser(arg_parser).parse_args(args=[])
+        self.assertIn("limit_time", args)
+
 
 if __name__ == '__main__':
     unittest.main()
