@@ -3,6 +3,7 @@
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
+from redis.exceptions import ConnectionError, TimeoutError
 
 __all__ = ["RedisMonitor"]
 
@@ -36,12 +37,35 @@ class RedisMonitor:
 
     def _listen(self):
         while True:
-            yield self._read_response()
+            try:
+                yield self._read_response()
+            except TimeoutError as e:
+                raise TimeoutError("{} While listening to the response"
+                                   .format(str(e)))
+            except ConnectionError as e:
+                raise ConnectionError("{} While sending the monitor command"
+                                      .format(str(e)))
+            except Exception as e:
+                raise Exception("{} while sending the monitor command"
+                                .format(str(e)))
 
     def monitor(self):
         """Produce an iterable of changes on the Redis database."""
         if self._connection is None:
             self._connection = self._connection_pool.get_connection(
                 'monitor', None)
-        self._connection.send_command("monitor")
+        self._send_command_monitor()
         return self._listen()
+
+    def _send_command_monitor(self):
+        try:
+            self._connection.send_command("monitor")
+        except TimeoutError as e:
+            raise TimeoutError("{} While sending the monitor command"
+                               .format(str(e)))
+        except ConnectionError as e:
+            raise ConnectionError("{} While sending the monitor command"
+                                  .format(str(e)))
+        except Exception as e:
+            raise Exception("{} while sending the monitor command"
+                            .format(str(e)))

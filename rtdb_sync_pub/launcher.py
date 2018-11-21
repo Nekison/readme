@@ -6,10 +6,12 @@ All rights reserved.
 """
 
 import json
-
+import time
 import redis
+import sys
 import configargparse
 import paho.mqtt.client as mqtt
+from redis.exceptions import ConnectionError, TimeoutError
 
 from . import __version__, monitor, command, filter, transform, config
 
@@ -67,14 +69,45 @@ if __name__ == '__main__':
 
     print("Starting Real Time Database monitoring")
 
-    for comm in transform.set_agent(
-            transform.prefix_key_name(
-            filter.filter_allowed_commands(
-            filter_queue.filter(
-            filter.filter_target_database(
-            command.parse_responses(monitor.monitor()), args.redis_db))),
-            args.mqtt_topic), args.agent_id):
+    limit_time = args.limit_time
+    previous_error_time = None
+    start_time = None
 
-        result = client.publish(comm.key_name, json.dumps(comm.__dict__), 1)
-        print("MQTT Message Publish called for topic {} with result {}"
-              .format(comm.key_name, str(result)))
+    while True:
+        try:
+            for comm in transform.set_agent(
+                    transform.prefix_key_name(
+                    filter.filter_allowed_commands(
+                    filter_queue.filter(
+                    filter.filter_target_database(
+                    command.parse_responses(monitor.monitor()),
+                        args.redis_db))),
+                    args.mqtt_topic), args.agent_id):
+
+                result = client.publish(comm.key_name,
+                                        json.dumps(comm.__dict__), 1)
+                print("MQTT Message Publish called for topic {} with result {}"
+                      .format(comm.key_name, str(result)))
+        except ConnectionError as e:
+            print("{}".format(str(e)))
+        except TimeoutError as e:
+            print("{}".format(str(e)))
+        except Exception as e:
+            print(str(e))
+        finally:
+            if start_time is None:
+                start_time = time.time()
+            else:
+                error_time = time.time() - previous_error_time
+                if error_time >= 2:
+                    start_time = time.time()
+                else:
+                    elapsed_time = time.time() - start_time
+                    elapsed_time_int = int(elapsed_time)
+                    if elapsed_time_int >= int(limit_time):
+                        print("Error during synchronization, "
+                              "try to recover for {} seconds".
+                              format(limit_time))
+                        sys.exit(1)
+
+            previous_error_time = time.time()
