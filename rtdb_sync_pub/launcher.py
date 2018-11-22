@@ -10,27 +10,12 @@ import time
 import redis
 import sys
 import configargparse
-import paho.mqtt.client as mqtt
+import paho.mqtt.client as mqtt_client
+
+from .utils import mqtt
 from redis.exceptions import ConnectionError, TimeoutError
 
 from . import __version__, monitor, command, filter, transform, config
-
-
-def mqtt_on_connect(client, userdata, flags, rc):
-    """Log MQTT CONNACK response information.
-
-    Used as MQTT client on_connect callback.
-    """
-    print("MQTT Client Connected with result code {}".format(str(rc)))
-
-
-def mqtt_on_publish(client, userdata, result):
-    """Log MQTT PUBACK information.
-
-    Used as MQTT client on_publish callback.
-    """
-    print("MQTT Message Published with result code {}".format(str(result)))
-
 
 if __name__ == '__main__':
     print("Starting Real Time Database Synchronization Publisher Ver.",
@@ -48,11 +33,11 @@ if __name__ == '__main__':
                                 db=args.redis_db)
     r = redis.Redis(connection_pool=pool)
 
-    client = mqtt.Client()
+    client = mqtt_client.Client()
 
     # setup client settings
-    client.on_connect = mqtt_on_connect
-    client.on_publish = mqtt_on_publish
+    client.on_connect = mqtt.on_connect
+    client.on_publish = mqtt.on_publish
     client.enable_logger()
 
     if args.mqtt_port != 1883:
