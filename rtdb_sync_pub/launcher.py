@@ -5,16 +5,19 @@ Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
 
+# Standard library imports
 import json
-import time
-import redis
 import sys
+import time
+
+# Third party imports
 import configargparse
 import paho.mqtt.client as mqtt_client
+import redis
 
-from .utils import mqtt
+# Local application imports
 from redis.exceptions import ConnectionError, TimeoutError
-
+from .utils import mqtt
 from . import __version__, monitor, command, filter, transform, config
 
 if __name__ == '__main__':
