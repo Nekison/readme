@@ -12,7 +12,6 @@ import time
 
 # Third party imports
 import configargparse
-import paho.mqtt.client as mqtt_client
 import redis
 
 # Local application imports
@@ -36,21 +35,7 @@ if __name__ == '__main__':
                                 db=args.redis_db)
     r = redis.Redis(connection_pool=pool)
 
-    client = mqtt_client.Client()
-
-    # setup client settings
-    client.on_connect = mqtt.on_connect
-    client.on_publish = mqtt.on_publish
-    client.enable_logger()
-
-    if args.mqtt_port != 1883:
-        client.tls_set(ca_certs=args.mqtt_ca_certs)
-
-        client.tls_insecure_set(args.mqtt_tls_insecure)
-
-    client.loop_start()
-
-    client.connect_async(args.mqtt_host, args.mqtt_port)
+    mqtt_client = mqtt.create_client(args)
 
     monitor = monitor.RedisMonitor(pool)
     filter_queue = filter.CommandFilterQueue()
@@ -72,7 +57,7 @@ if __name__ == '__main__':
                         args.redis_db))),
                     args.mqtt_topic), args.agent_id):
 
-                result = client.publish(comm.key_name,
+                result = mqtt_client.publish(comm.key_name,
                                         json.dumps(comm.__dict__), 1)
                 print("MQTT Message Publish called for topic {} with result {}"
                       .format(comm.key_name, str(result)))
