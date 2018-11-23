@@ -20,7 +20,7 @@ def _check_connection(args, exec_queue):
     timeout = args.limit_time
 
     while True:
-        if exec_queue.empty():
+        if exec_queue.qsize() == 0:
             elapse_time = time.time() - start_time
             if elapse_time > timeout:
                 exec_queue.put("BROKER_NOT_CONNECTED")

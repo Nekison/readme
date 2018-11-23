@@ -69,7 +69,7 @@ if __name__ == '__main__':
                 time.sleep(2)
 
                 # Check exec queue from mqtt client thread
-                if exec_queue.empty():
+                if exec_queue.qsize() == 0:
                     continue
                 else:
                     q_info = exec_queue.get()
