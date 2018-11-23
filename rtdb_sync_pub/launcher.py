@@ -18,7 +18,7 @@ from redis.exceptions import ConnectionError, TimeoutError
 
 # Local application imports
 from .utils.exceptions import MqttBrokerIsDown, MqttBrokerNotFound
-from .utils import mqtt
+from .utils.mqtt import client as mqtt_client
 from . import __version__, monitor, command, filter, transform, config
 
 if __name__ == '__main__':
@@ -39,7 +39,7 @@ if __name__ == '__main__':
         r = redis.Redis(connection_pool=pool)
 
         exec_queue = queue.Queue()
-        mqtt_client = mqtt.create_client(args, exec_queue)
+        mqtt_client = mqtt_client.create(args, exec_queue)
 
         monitor = monitor.RedisMonitor(pool)
         filter_queue = filter.CommandFilterQueue()
