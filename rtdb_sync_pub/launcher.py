@@ -49,7 +49,8 @@ def main():
     # pool = redis.ConnectionPool(host='192.168.1.141', port=6379, db=0)
     pool = redis.ConnectionPool(host=args.redis_host, port=6379,
                                 db=args.redis_db)
-    r = redis.Redis(connection_pool=pool)
+
+    redis.Redis(connection_pool=pool)
 
     mqtt_events_queue = queue.Queue()
     mqtt_client = client_mqtt.create(args, mqtt_events_queue)
