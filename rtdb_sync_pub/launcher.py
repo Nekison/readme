@@ -21,6 +21,18 @@ from .utils.exceptions import MqttBrokerIsDown, MqttBrokerNotFound
 from .utils.mqtt import events, client as mqtt_client
 from . import __version__, monitor, command, filter, transform, config
 
+
+def check_mqtt_events(mqtt_events_queue):
+    if mqtt_events_queue.qsize() != 0:
+        event = mqtt_events_queue.get()
+        if event == events.MQTT_BROKER_DOWN:
+            raise MqttBrokerIsDown
+        elif event == events.MQTT_BROKER_NOT_FOUND:
+            raise MqttBrokerNotFound
+        else:
+            print(event)
+
+
 if __name__ == '__main__':
     try:
         print("Starting Real Time Database Synchronization Publisher Ver.",
@@ -67,18 +79,7 @@ if __name__ == '__main__':
                           .format(comm.key_name, str(result)))
 
                 time.sleep(2)
-
-                # Check exec queue from mqtt client thread
-                if mqtt_events_queue.qsize() == 0:
-                    continue
-                else:
-                    event = mqtt_events_queue.get()
-                    if event == events.MQTT_BROKER_DOWN:
-                        raise MqttBrokerIsDown
-                    elif event == events.MQTT_BROKER_NOT_FOUND:
-                        raise MqttBrokerNotFound
-                    else:
-                        print(event)
+                check_mqtt_events(mqtt_events_queue)
 
             except ConnectionError as e:
                 print("{}".format(str(e)))
