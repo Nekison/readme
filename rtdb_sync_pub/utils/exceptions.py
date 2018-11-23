@@ -13,4 +13,4 @@ class MqttBrokerIsDown(Error):
 
 
 class MqttBrokerNotFound(Error):
-    """Class to indicate that mqtt client can't establish connection with mqtt broker."""
+    """Class to indicate that mqtt client can't connect with mqtt broker."""

@@ -23,6 +23,7 @@ from . import __version__, monitor, command, filter, transform, config
 
 
 def check_mqtt_events(mqtt_events_queue):
+    """Check if ocurred some event in thread for mqtt client."""
     if mqtt_events_queue.qsize() != 0:
         event = mqtt_events_queue.get()
         if event == events.MQTT_BROKER_DOWN:
@@ -34,6 +35,7 @@ def check_mqtt_events(mqtt_events_queue):
 
 
 def main():
+    """Create main function this is entry point for service."""
     print("Starting Real Time Database Synchronization Publisher Ver.",
           __version__)
 

@@ -1,7 +1,6 @@
 """Module to provide mqtt utilities."""
 
 # Standard library imports
-import sys
 import time
 
 # Third party imports
@@ -10,7 +9,6 @@ import paho.mqtt.client as mqtt
 # Local application imports
 from . import callbacks as cb
 from . import events
-from ..exceptions import MqttBrokerIsDown
 
 
 __all__ = ["create"]
@@ -37,6 +35,7 @@ def _check_connection(args, events_queue):
 
 
 def create(args, events_queue):
+    """Create mqtt client."""
     client = mqtt.Client()
 
     # setup client settings

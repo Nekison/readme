@@ -1,4 +1,4 @@
-"""Module to declare mqtt callbacks used in the application"""
+"""Module to declare mqtt callbacks used in the application."""
 
 # Standard library imports
 import sys
@@ -42,7 +42,7 @@ def on_disconnect(args, events_queue):
 
 
 def on_connect(events_queue):
-
+    """High order function to create on_connect callback use by mqtt client."""
     def inner_on_connect(client, userdata, flags, rc):
         """Log MQTT CONNACK response information.
 

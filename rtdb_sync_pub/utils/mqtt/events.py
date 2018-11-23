@@ -1,4 +1,4 @@
-
+"""Module to declare mqtt events."""
 __all__ = ["CLIENT_CONNECTED", "MQTT_BROKER_DOWN", "MQTT_BROKER_NOT_FOUND"]
 
 CLIENT_CONNECTED = "CLIENT_CONNECTED"
