@@ -34,6 +34,8 @@ def _on_disconnect(args, exec_queue):
                 if elapsed_time > timeout_time:
                     client.loop_stop()
                     exec_queue.put("BROKER_DOWN")
+
+                    # Finishing mqtt client thread
                     sys.exit(1)
                 else:
                     time.sleep(1)
@@ -42,12 +44,17 @@ def _on_disconnect(args, exec_queue):
     return inner_on_disconnect
 
 
-def _on_connect(client, userdata, flags, rc):
-    """Log MQTT CONNACK response information.
+def _on_connect(exec_queue):
 
-    Used as MQTT client on_connect callback.
-    """
-    print("MQTT Client Connected with result code {}".format(str(rc)))
+    def inner_on_connect(client, userdata, flags, rc):
+        """Log MQTT CONNACK response information.
+
+        Used as MQTT client on_connect callback.
+        """
+        exec_queue.put("CLIENT_CONNECTED")
+        print("MQTT Client Connected with result code {}".format(str(rc)))
+
+    return inner_on_connect
 
 
 def _on_publish(client, userdata, result):
@@ -58,11 +65,31 @@ def _on_publish(client, userdata, result):
     print("MQTT Message Published with result code {}".format(str(result)))
 
 
+def _check_connection(args, exec_queue):
+    start_time = time.time()
+    timeout = args.limit_time
+
+    while True:
+        if exec_queue.empty():
+            elapse_time = time.time() - start_time
+            if elapse_time > timeout:
+                exec_queue.put("BROKER_NOT_CONNECTED")
+                break
+            else:
+                continue
+        else:
+            event = exec_queue.get()
+            if event == "CLIENT_CONNECTED":
+                break
+
+        time.sleep(1)
+
+
 def create_client(args, exec_queue):
     client = mqtt.Client()
 
     # setup client settings
-    client.on_connect = _on_connect
+    client.on_connect = _on_connect(exec_queue)
     client.on_publish = _on_publish
     client.on_disconnect = _on_disconnect(args, exec_queue)
 
@@ -70,11 +97,13 @@ def create_client(args, exec_queue):
 
     if args.mqtt_port != 1883:
         client.tls_set(ca_certs=args.mqtt_ca_certs)
-
         client.tls_insecure_set(args.mqtt_tls_insecure)
 
     client.loop_start()
+    client.connect_async(args.mqtt_host, args.mqtt_port,
+                         keepalive=args.limit_time)
 
-    client.connect_async(args.mqtt_host, args.mqtt_port)
+    print("Connecting to mqtt broker")
+    _check_connection(args, exec_queue)
 
     return client
