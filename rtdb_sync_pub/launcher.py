@@ -18,7 +18,7 @@ from redis.exceptions import ConnectionError, TimeoutError
 
 # Local application imports
 from .utils.exceptions import MqttBrokerIsDown, MqttBrokerNotFound
-from .utils.mqtt import events, client as mqtt_client
+from .utils.mqtt import events, client as client_mqtt
 from . import __version__, monitor, command, filter, transform, config
 
 
@@ -50,9 +50,9 @@ def main():
     r = redis.Redis(connection_pool=pool)
 
     mqtt_events_queue = queue.Queue()
-    mqtt_client = mqtt_client.create(args, mqtt_events_queue)
+    mqtt_client = client_mqtt.create(args, mqtt_events_queue)
 
-    monitor = monitor.RedisMonitor(pool)
+    redis_monitor = monitor.RedisMonitor(pool)
     filter_queue = filter.CommandFilterQueue()
 
     print("Starting Real Time Database monitoring")
@@ -68,7 +68,7 @@ def main():
                     filter.filter_allowed_commands(
                     filter_queue.filter(
                     filter.filter_target_database(
-                    command.parse_responses(monitor.monitor()),
+                    command.parse_responses(redis_monitor.monitor()),
                         args.redis_db))),
                     args.mqtt_topic), args.agent_id):
 
