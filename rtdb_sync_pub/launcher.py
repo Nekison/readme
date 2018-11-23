@@ -18,7 +18,7 @@ from redis.exceptions import ConnectionError, TimeoutError
 
 # Local application imports
 from .utils.exceptions import MqttBrokerIsDown, MqttBrokerNotFound
-from .utils.mqtt import client as mqtt_client
+from .utils.mqtt import events, client as mqtt_client
 from . import __version__, monitor, command, filter, transform, config
 
 if __name__ == '__main__':
@@ -73,9 +73,9 @@ if __name__ == '__main__':
                     continue
                 else:
                     q_info = exec_queue.get()
-                    if q_info == "BROKER_DOWN":
+                    if q_info == events.MQTT_BROKER_DOWN:
                         raise MqttBrokerIsDown
-                    elif q_info == "BROKER_NOT_CONNECTED":
+                    elif q_info == events.MQTT_BROKER_NOT_FOUND:
                         raise MqttBrokerNotFound
                     else:
                         print(q_info)

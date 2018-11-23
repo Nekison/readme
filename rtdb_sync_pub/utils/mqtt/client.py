@@ -9,6 +9,7 @@ import paho.mqtt.client as mqtt
 
 # Local application imports
 from . import callbacks as cb
+from . import events
 from ..exceptions import MqttBrokerIsDown
 
 
@@ -23,13 +24,13 @@ def _check_connection(args, exec_queue):
         if exec_queue.qsize() == 0:
             elapse_time = time.time() - start_time
             if elapse_time > timeout:
-                exec_queue.put("BROKER_NOT_CONNECTED")
+                exec_queue.put(events.MQTT_BROKER_NOT_FOUND)
                 break
             else:
                 continue
         else:
             event = exec_queue.get()
-            if event == "CLIENT_CONNECTED":
+            if event == events.CLIENT_CONNECTED:
                 break
 
         time.sleep(1)
