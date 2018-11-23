@@ -38,8 +38,8 @@ if __name__ == '__main__':
                                     db=args.redis_db)
         r = redis.Redis(connection_pool=pool)
 
-        exec_queue = queue.Queue()
-        mqtt_client = mqtt_client.create(args, exec_queue)
+        mqtt_events_queue = queue.Queue()
+        mqtt_client = mqtt_client.create(args, mqtt_events_queue)
 
         monitor = monitor.RedisMonitor(pool)
         filter_queue = filter.CommandFilterQueue()
@@ -69,16 +69,16 @@ if __name__ == '__main__':
                 time.sleep(2)
 
                 # Check exec queue from mqtt client thread
-                if exec_queue.qsize() == 0:
+                if mqtt_events_queue.qsize() == 0:
                     continue
                 else:
-                    q_info = exec_queue.get()
-                    if q_info == events.MQTT_BROKER_DOWN:
+                    event = mqtt_events_queue.get()
+                    if event == events.MQTT_BROKER_DOWN:
                         raise MqttBrokerIsDown
-                    elif q_info == events.MQTT_BROKER_NOT_FOUND:
+                    elif event == events.MQTT_BROKER_NOT_FOUND:
                         raise MqttBrokerNotFound
                     else:
-                        print(q_info)
+                        print(event)
 
             except ConnectionError as e:
                 print("{}".format(str(e)))

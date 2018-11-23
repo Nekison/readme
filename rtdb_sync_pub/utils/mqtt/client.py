@@ -16,33 +16,33 @@ from ..exceptions import MqttBrokerIsDown
 __all__ = ["create"]
 
 
-def _check_connection(args, exec_queue):
+def _check_connection(args, events_queue):
     start_time = time.time()
     timeout = args.limit_time
 
     while True:
-        if exec_queue.qsize() == 0:
+        if events_queue.qsize() == 0:
             elapse_time = time.time() - start_time
             if elapse_time > timeout:
-                exec_queue.put(events.MQTT_BROKER_NOT_FOUND)
+                events_queue.put(events.MQTT_BROKER_NOT_FOUND)
                 break
             else:
                 continue
         else:
-            event = exec_queue.get()
+            event = events_queue.get()
             if event == events.CLIENT_CONNECTED:
                 break
 
         time.sleep(1)
 
 
-def create(args, exec_queue):
+def create(args, events_queue):
     client = mqtt.Client()
 
     # setup client settings
-    client.on_connect = cb.on_connect(exec_queue)
+    client.on_connect = cb.on_connect(events_queue)
     client.on_publish = cb.on_publish
-    client.on_disconnect = cb.on_disconnect(args, exec_queue)
+    client.on_disconnect = cb.on_disconnect(args, events_queue)
 
     client.enable_logger()
 
@@ -55,6 +55,6 @@ def create(args, exec_queue):
                          keepalive=args.limit_time)
 
     print("Connecting to mqtt broker")
-    _check_connection(args, exec_queue)
+    _check_connection(args, events_queue)
 
     return client
