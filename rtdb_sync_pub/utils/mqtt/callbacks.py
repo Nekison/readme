@@ -11,7 +11,7 @@ from . import events
 __all__ = ["on_disconnect", "on_connect", "on_publish"]
 
 
-def on_disconnect(args, exec_queue):
+def on_disconnect(args, events_queue):
     """Manage disconnect event from mqtt broker."""
     timeout_time = args.limit_time
 
@@ -30,7 +30,7 @@ def on_disconnect(args, exec_queue):
 
                 if elapsed_time > timeout_time:
                     client.loop_stop()
-                    exec_queue.put(events.MQTT_BROKER_DOWN)
+                    events_queue.put(events.MQTT_BROKER_DOWN)
 
                     # Finishing mqtt client thread
                     sys.exit(1)
@@ -41,14 +41,14 @@ def on_disconnect(args, exec_queue):
     return inner_on_disconnect
 
 
-def on_connect(exec_queue):
+def on_connect(events_queue):
 
     def inner_on_connect(client, userdata, flags, rc):
         """Log MQTT CONNACK response information.
 
         Used as MQTT client on_connect callback.
         """
-        exec_queue.put(events.CLIENT_CONNECTED)
+        events_queue.put(events.CLIENT_CONNECTED)
         print("MQTT Client Connected with result code {}".format(str(rc)))
 
     return inner_on_connect
