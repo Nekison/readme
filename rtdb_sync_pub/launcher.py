@@ -46,7 +46,6 @@ def main():
     # print application configuration
     print(arg_parser.format_values())
 
-    # pool = redis.ConnectionPool(host='192.168.1.141', port=6379, db=0)
     pool = redis.ConnectionPool(host=args.redis_host, port=6379,
                                 db=args.redis_db)
 
@@ -58,7 +57,7 @@ def main():
     redis_monitor = monitor.RedisMonitor(pool)
     filter_queue = filter.CommandFilterQueue()
 
-    print("Starting Real Time Database monitoring")
+    print("Starting Real Time Database monitoring - Publisher")
 
     limit_time = args.limit_time
     previous_error_time = None
