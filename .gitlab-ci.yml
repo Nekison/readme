@@ -39,6 +39,9 @@ build-deb:
     paths:
       - build/*.deb
 
+  only:
+    - tags
+
 
 
 build-deb-9:
@@ -58,6 +61,9 @@ build-deb-9:
     when: on_success
     paths:
       - build/*.deb
+  
+  only:
+    - tags
 
 
 
