@@ -43,6 +43,30 @@ build-deb:
     - tags
 
 
+
+build-deb-9:
+  stage: build
+
+  image: debian:9
+
+  script:
+    - apt-get update
+    - apt-get install -yy devscripts
+    - mk-build-deps -ir -t "apt-get --yes --no-install-recommends"
+    - debuild -b -uc -us
+    - mkdir build
+    - mv ../*.deb build/
+
+  artifacts:
+    when: on_success
+    paths:
+      - build/*.deb
+  
+  only:
+    - tags
+
+
+
 test:
   image: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
 
