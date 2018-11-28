@@ -1,3 +1,9 @@
+rtdb-sync-pub (1.0.1) unstable; urgency=low
+
+  * improve behavior on error conditions
+
+ -- Omar Enrique Lopez Gonzalez <omar.enrique1211@gmail.com>  Wed, 28 Nov 2018 14:10:41 -0500
+
 rtdb-sync-pub (1.0.0-1) unstable; urgency=low
 
   * update default deployment config to use MQTTs port 443
