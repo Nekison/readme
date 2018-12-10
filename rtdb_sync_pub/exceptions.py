@@ -1,4 +1,4 @@
-"""Module for declare custom execption."""
+"""Module for declare custom exceptions."""
 
 
 __all__ = ["MqttBrokerIsDown", "MqttBrokerNotFound"]
