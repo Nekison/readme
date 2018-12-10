@@ -17,7 +17,7 @@ import redis
 from redis.exceptions import ConnectionError, TimeoutError
 
 # Local application imports
-from .utils.exceptions import MqttBrokerIsDown, MqttBrokerNotFound
+from .exceptions import MqttBrokerIsDown, MqttBrokerNotFound
 from .utils.mqtt import events, client as client_mqtt
 from . import __version__, monitor, command, filter, transform, config
 
