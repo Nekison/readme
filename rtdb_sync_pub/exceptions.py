@@ -4,13 +4,9 @@
 __all__ = ["MqttBrokerIsDown", "MqttBrokerNotFound"]
 
 
-class Error(Exception):
-    """Base class for other exceptions."""
-
-
-class MqttBrokerIsDown(Error):
+class MqttBrokerIsDown(Exception):
     """Class to indicate that mqtt broker is down."""
 
 
-class MqttBrokerNotFound(Error):
+class MqttBrokerNotFound(Exception):
     """Class to indicate that mqtt client can't connect with mqtt broker."""
