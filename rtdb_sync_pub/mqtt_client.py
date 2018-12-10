@@ -7,9 +7,7 @@ import time
 import paho.mqtt.client as mqtt
 
 # Local application imports
-from . import callbacks as cb
-from . import events
-
+from . import mqtt_callbacks, mqtt_events
 
 __all__ = ["create"]
 
@@ -22,13 +20,13 @@ def _check_connection(args, events_queue):
         if events_queue.qsize() == 0:
             elapse_time = time.time() - start_time
             if elapse_time > timeout:
-                events_queue.put(events.MQTT_BROKER_NOT_FOUND)
+                events_queue.put(mqtt_events.MQTT_BROKER_NOT_FOUND)
                 break
             else:
                 continue
         else:
             event = events_queue.get()
-            if event == events.CLIENT_CONNECTED:
+            if event == mqtt_events.CLIENT_CONNECTED:
                 break
 
         time.sleep(1)
@@ -39,9 +37,9 @@ def create(args, events_queue):
     client = mqtt.Client()
 
     # setup client settings
-    client.on_connect = cb.on_connect(events_queue)
-    client.on_publish = cb.on_publish
-    client.on_disconnect = cb.on_disconnect(args, events_queue)
+    client.on_connect = mqtt_callbacks.on_connect(events_queue)
+    client.on_publish = mqtt_callbacks.on_publish
+    client.on_disconnect = mqtt_callbacks.on_disconnect(args, events_queue)
 
     client.enable_logger()
 

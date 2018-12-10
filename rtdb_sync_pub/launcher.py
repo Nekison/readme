@@ -14,22 +14,21 @@ import queue
 # Third party imports
 import configargparse
 import redis
-from redis.exceptions import ConnectionError, TimeoutError
+from redis import exceptions as redis_exceptions
 
 # Local application imports
-from .exceptions import MqttBrokerIsDown, MqttBrokerNotFound
-from .utils.mqtt import events, client as client_mqtt
-from . import __version__, monitor, command, filter, transform, config
+from . import __version__, monitor, command, filter, transform, config, \
+    mqtt_client as client_mqtt, mqtt_events, exceptions
 
 
 def check_mqtt_events(mqtt_events_queue):
     """Check if ocurred some event in thread for mqtt client."""
     if mqtt_events_queue.qsize() != 0:
         event = mqtt_events_queue.get()
-        if event == events.MQTT_BROKER_DOWN:
-            raise MqttBrokerIsDown
-        elif event == events.MQTT_BROKER_NOT_FOUND:
-            raise MqttBrokerNotFound
+        if event == mqtt_events.MQTT_BROKER_DOWN:
+            raise exceptions.MqttBrokerIsDown
+        elif event == mqtt_events.MQTT_BROKER_NOT_FOUND:
+            raise exceptions.MqttBrokerNotFound
         else:
             print(event)
 
@@ -82,9 +81,9 @@ def main():
             time.sleep(2)
             check_mqtt_events(mqtt_events_queue)
 
-        except ConnectionError as e:
+        except redis_exceptions.ConnectionError as e:
             print("{}".format(str(e)))
-        except TimeoutError as e:
+        except redis_exceptions.TimeoutError as e:
             print("{}".format(str(e)))
         finally:
             if start_time is None:
@@ -108,9 +107,9 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except MqttBrokerIsDown as error:
+    except exceptions.MqttBrokerIsDown as error:
         print("Mqtt broker is down application will end")
         sys.exit(1)
-    except MqttBrokerNotFound as error:
+    except exceptions.MqttBrokerNotFound as error:
         print("Connection to mqtt broker can't be established")
         sys.exit(1)

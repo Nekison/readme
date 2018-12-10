@@ -6,7 +6,7 @@ import time
 
 
 # Local application imports
-from . import events
+from . import mqtt_events
 
 __all__ = ["on_disconnect", "on_connect", "on_publish"]
 
@@ -30,7 +30,7 @@ def on_disconnect(args, events_queue):
 
                 if elapsed_time > timeout_time:
                     client.loop_stop()
-                    events_queue.put(events.MQTT_BROKER_DOWN)
+                    events_queue.put(mqtt_events.MQTT_BROKER_DOWN)
 
                     # Finishing mqtt client thread
                     sys.exit(1)
@@ -48,7 +48,7 @@ def on_connect(events_queue):
 
         Used as MQTT client on_connect callback.
         """
-        events_queue.put(events.CLIENT_CONNECTED)
+        events_queue.put(mqtt_events.CLIENT_CONNECTED)
         print("MQTT Client Connected with result code {}".format(str(rc)))
 
     return inner_on_connect
