@@ -75,11 +75,12 @@ def main():
 
                 result = mqtt_client.publish(comm.key_name,
                                              json.dumps(comm.__dict__), 1)
+
+                print("MQTT Message will be published {}".format(time.time()))
                 print("MQTT Message Publish called for topic {} with result {}"
                       .format(comm.key_name, str(result)))
 
-            time.sleep(2)
-            check_mqtt_events(mqtt_events_queue)
+                check_mqtt_events(mqtt_events_queue)
 
         except redis_exceptions.ConnectionError as e:
             print("{}".format(str(e)))

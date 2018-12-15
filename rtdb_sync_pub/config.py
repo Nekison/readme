@@ -72,7 +72,7 @@ def setup_parser(parser: configargparse.ArgParser) -> configargparse.ArgParser:
                help="Process agent used to complement the sync")
 
     parser.add("--limit-time",
-               type=str,
+               type=int,
                action="store",
                default=120,
                env_var='LIMIT_TIME',

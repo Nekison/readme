@@ -37,6 +37,7 @@ class RedisMonitor:
         return self._connection.read_response()
 
     def _listen(self):
+        while True:
             try:
                 yield self._read_response()
             except redis_exceptions.TimeoutError as e:
