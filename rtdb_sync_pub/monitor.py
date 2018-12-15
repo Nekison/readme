@@ -3,7 +3,9 @@
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
-from redis.exceptions import ConnectionError, TimeoutError
+import time
+
+from redis import exceptions as redis_exceptions
 
 __all__ = ["RedisMonitor"]
 
@@ -36,14 +38,15 @@ class RedisMonitor:
         return self._connection.read_response()
 
     def _listen(self):
+        while True:
             try:
                 yield self._read_response()
-            except TimeoutError as e:
-                raise TimeoutError("{} While listening to the response"
-                                   .format(str(e)))
-            except ConnectionError as e:
-                raise ConnectionError("{} While sending the monitor command"
-                                      .format(str(e)))
+            except redis_exceptions.TimeoutError as e:
+                raise redis_exceptions.TimeoutError(
+                    "{} While listening to the response".format(str(e)))
+            except redis_exceptions.ConnectionError as e:
+                raise redis_exceptions.ConnectionError(
+                    "{} While sending the monitor command".format(str(e)))
             except Exception as e:
                 raise Exception("{} while sending the monitor command"
                                 .format(str(e)))
