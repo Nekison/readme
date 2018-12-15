@@ -3,7 +3,6 @@
 Copyright (c) 2018, Sorbotics LLC.
 All rights reserved.
 """
-import time
 
 from redis import exceptions as redis_exceptions
 
