@@ -76,7 +76,6 @@ def main():
                 result = mqtt_client.publish(comm.key_name,
                                              json.dumps(comm.__dict__), 1)
 
-                print("MQTT Message will be published {}".format(time.time()))
                 print("MQTT Message Publish called for topic {} with result {}"
                       .format(comm.key_name, str(result)))
 
