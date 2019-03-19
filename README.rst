@@ -15,7 +15,7 @@ Publish Real Time Database events in order to synchronize two instances of the R
 
 Following policies apply to the development of this project:
 
-* `General Policies <https://gitlab.dev.sorbapp.com/sorbotics/website/blob/master/policies/general-policies.md>`_
+* `General Policies <https://www.google.com>`_
 * `Policies for Server Side development using the Python programming language <https://gitlab.dev.sorbapp.com/sorbotics/website/blob/master/policies/runtime-specific/python.md>`_
 
 Setup
